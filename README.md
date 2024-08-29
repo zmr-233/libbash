@@ -13,16 +13,17 @@
 ### 目录结构
 
 ```
-/home/zmr466/dotfilesConfig/CURDOTFILES/libbash
+/home/zmr466/DotfilesConfigMaster/CURDOTFILES/libbash
 ├── array_utils.sh
 ├── color_utils.sh
 ├── file_utils.sh
 ├── input_utils.sh
 ├── libbash.sh
 ├── others_utils.sh
+├── regfile_template.sh
 └── safe_utils.sh
 
-1 directory, 7 files
+1 directory, 8 files
 ```
 
 ### 函数列表
@@ -73,7 +74,11 @@
 | `checkCmd` | 检查命令是否存在 |
 | `checkCfg` | 检查配置文件或目录是否存在 |
 | `countDown` | 执行倒计时 |
-| `regfilesTemplate` | 获得一套生成Dotfiles的模板 |
+
+#### regfile_template.sh:
+| Function | Description |
+|----------|-------------|
+| `regfileTemplate` | 生成regfile模板函数 |
 
 #### safe_utils.sh:
 | Function | Description |

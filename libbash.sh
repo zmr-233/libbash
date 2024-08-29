@@ -1,8 +1,16 @@
 #!/bin/bash
 
-libfiles=()
+# 方案来源:
+# https://stackoverflow.com/questions/2683279/how-to-detect-if-a-script-is-being-sourced
+# 检测自身是否被source
+(return 0 2>/dev/null) && LIBBASH_SOURCED="yes" || LIBBASH_SOURCED="no"
 
-# LIBBASH_HOME=$HOME/libbash
+# 注意: 该变量是DotfilesConfigMaster的环境变量，应该由DotfilesConfigMaster设置
+DOTFILES_CONFIG_MASTER_HOME=$HOME/DotfilesConfigMaster
+
+# LIBBASH_HOME=$HOME/libbash # 用于存储libbash目录的路径
+
+libfiles=() # 用于存储libbash目录下的所有文件名
 
 # 检查环境变量LIBBASH_HOME是否已设置并且目录是否存在
 if [ -z "$LIBBASH_HOME" ] || [ ! -d "$LIBBASH_HOME" ]; then
@@ -28,10 +36,9 @@ done
 # for filename in "${libfiles[@]}"; do
 #     DEBUG "$filename"
 # done
-DOTFILES_CONFIG_MASTER_HOME=$HOME/dotfilesConfig
 __generate_libbash_regfile() {
     if [ -z "$DOTFILES_CONFIG_MASTER_HOME" ]; then
-        ERROR "DOTFILES_CONFIG_MASTER_HOME is not set"
+        echo "DOTFILES_CONFIG_MASTER_HOME is not set"
         exit 1
     fi
     local TARGET="$DOTFILES_CONFIG_MASTER_HOME/regfiles/libbash.sh"
@@ -56,8 +63,8 @@ libbash_check(){
 libbash_install(){
 genSignS "libbash" $INSTALL
 cat << 'EOF' >> $INSTALL
-minfo "......正在安装libbash......"
-cinfo "libbash是无需安装的bash函数库"
+MODULE_INFO "......正在安装libbash......"
+INFO "libbash是无需安装的bash函数库"
 EOF
 genSignE "libbash" $INSTALL
 }
@@ -94,7 +101,7 @@ XXMN
 
 echo '# 配置文件 libbash/libbash.sh'
 echo "cat << 'PPAP' >> \$TEMP/libbash/libbash.sh"
-cat "$LIBBASH_HOME/$0"
+cat "$LIBBASH_HOME/libbash.sh"
 echo ""
 echo 'PPAP'
 echo ""
@@ -197,7 +204,7 @@ __generate_libbash_git(){
     
 }
 
-if [[ $# -eq 0 ]]; then
+if [[ $# -eq 0 ]] || [[ "$LIBBASH_SOURCED" == "yes" ]]; then
     # 只允许加载一次
     if [ -z "$LIBBASH_SOURCE_ONCE" ]; then
         for filename in "${libfiles[@]}"; do
@@ -222,6 +229,11 @@ else
                 __generate_libbash_readme
                 shift
                 ;;
+            --gen-update)
+                __generate_libbash_git
+                __generate_libbash_regfile
+                shift
+                ;;
             *)
                 echo "Unknown option: $1"
                 shift
@@ -229,5 +241,6 @@ else
         esac
     done
 fi
+
 
 
