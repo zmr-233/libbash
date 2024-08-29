@@ -16,7 +16,7 @@ fi
 # 加载所有文件
 for file in "$LIBBASH_HOME"/*; do
     fileName=$(basename "$file")
-    if [[ "$fileName" == "libbash.sh" ]]; then
+    if [[ "$fileName" == "libbash.sh" ]] || [[ "$fileName" == "README.md" ]] ; then
         continue
     fi
     # source "$file" # 不能使用source，否则会导致所有函数都被加载
@@ -229,7 +229,5 @@ else
         esac
     done
 fi
-
-
 
 

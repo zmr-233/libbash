@@ -14,7 +14,6 @@
 
 ```
 /home/zmr466/dotfilesConfig/CURDOTFILES/libbash
-├── README.md
 ├── array_utils.sh
 ├── color_utils.sh
 ├── file_utils.sh
@@ -23,14 +22,10 @@
 ├── others_utils.sh
 └── safe_utils.sh
 
-1 directory, 8 files
+1 directory, 7 files
 ```
 
 ### 函数列表
-
-#### README.md:
-| Function | Description |
-|----------|-------------|
 
 #### array_utils.sh:
 | Function | Description |
