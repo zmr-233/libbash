@@ -120,7 +120,7 @@ echo "" >> $TARGET
 
 # 用来生成README.md
 __generate_libbash_readme(){
-    echo "# Libbash Documentation"
+    echo "# Libbash Function Documentation"
     echo ""
     echo '这是一个zmr封装了大量实用bash函数的脚本库，用于快速开发bash脚本；该libbash函数注释全面，上手使用非常方便；但是字如其名，只能用于bash脚本，在其他环境下不能直接source'
     echo ""
@@ -157,7 +157,7 @@ __generate_libbash_readme(){
                 functionName="${BASH_REMATCH[1]}"
                 if [[ -n "$functionComment" ]]; then
                     # 输出Markdown表格行
-                    echo "| `$functionName` | $functionComment |"
+                    echo "| \`$functionName\` | $functionComment |"
                     # 重置functionComment为空
                     functionComment=""
                 fi
@@ -189,7 +189,7 @@ __generate_libbash_git(){
         __generate_libbash_readme
     } > README.md
     git add -A
-    git commit -m "Update libbash"
+    git commit -m "update libbash"
     git push
     popd > /dev/null
 
