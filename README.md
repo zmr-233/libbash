@@ -13,7 +13,7 @@
 ### 目录结构
 
 ```
-/home/zmr466/DotfilesConfigMaster/CURDOTFILES/libbash
+/home/zmr466/libbash
 ├── array_utils.sh
 ├── color_utils.sh
 ├── file_utils.sh
@@ -74,6 +74,7 @@
 | `checkCmd` | 检查命令是否存在 |
 | `checkCfg` | 检查配置文件或目录是否存在 |
 | `countDown` | 执行倒计时 |
+| `tyw_func` | 这是tyw叫我新增的函数 |
 
 #### regfile_template.sh:
 | Function | Description |

@@ -197,3 +197,4 @@ regfileTemplate(){
     INFO "临时注册文件生成完毕，文件路径: $DOT_CFG_TEMP/$1.sh"
 }
 
+
