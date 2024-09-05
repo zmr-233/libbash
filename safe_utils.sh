@@ -83,6 +83,7 @@ _checkTargetDirExists() {
 # @param string $targetDir 目标目录路径
 # @param string $backupSubdir 备份子目录路径（可选，默认为目标目录下的backup目录）
 # @return void
+# v1.1新增内容: 检查目标文件是否存在并与源文件内容不同，如果完全相同就不复制了
 # 安全复制文件
 copySafe() {
     local sourceFile=$1
@@ -94,8 +95,15 @@ copySafe() {
 
     local targetFile="$targetDir/$(basename "$sourceFile")"
 
+    # 检查目标文件是否存在并与源文件内容不同
     if [ -f "$targetFile" ]; then
-        _createBackup "$targetFile" "$backupSubdir" || return 1
+        diffFile "$sourceFile" "$targetFile"
+        local filesAreDifferent=$?
+
+        # 如果文件存在且内容不同，则创建备份
+        if [ $filesAreDifferent -ne 0 ]; then
+            _createBackup "$targetFile" "$backupSubdir" || return 1
+        fi
     fi
 
     cp -r "$sourceFile" "$targetFile" && INFO "File $sourceFile has been copied to $targetFile"
