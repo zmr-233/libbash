@@ -74,7 +74,30 @@ countDown() {
 # 请根据如上要求，用中文为如下的函数生成函数描述：
 
 
-
+# # ==========加载.libbash函数库==========
+# source test/libbash/libbash.sh
+# if [ $? -ne 0 ]; then
+#     echo "Unable to load libbash library"
+#     read -p "Would you like to automatically clone libbash from GitHub? (y/n) " -n 1 -r
+#     echo
+#     if [[ $REPLY =~ ^[Yy]$ ]]; then
+#         echo "Cloning libbash..."
+#         git clone https://github.com/zmr-233/libbash/ test/libbash
+#         if [ $? -ne 0 ]; then
+#             echo "Error occurred during git clone operation"
+#             exit 1
+#         fi
+#         echo "Attempting to source libbash again..."
+#         source test/libbash/libbash.sh
+#         if [ $? -ne 0 ]; then
+#             echo "Unable to load libbash library after cloning"
+#             exit 1
+#         fi
+#     else
+#         echo "User declined to clone libbash. Exiting..."
+#         exit 1
+#     fi
+# fi
 
 
 
