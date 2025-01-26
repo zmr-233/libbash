@@ -1,0 +1,3 @@
+[submodule "zmrEditor"]
+	path = zmrEditor
+	url = https://github.com/zmr-233/zmrEditor
