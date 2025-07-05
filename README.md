@@ -4,16 +4,17 @@
 
 ### 使用方法
 
-1. 克隆脚本库 `git clone https://github.com/zmr-233/libbash.git ~/libbash`
+1. 克隆脚本库到任意目录，例如 `git clone https://github.com/zmr-233/libbash.git /path/to/libbash`
 
-2. 在脚本中引入 `source ~/libbash/libbash.sh`
+2. 在脚本中引入 `source /path/to/libbash/libbash.sh`
 
-3. 可以手动运行`bash ~/libbash/libbash.sh -h`查看帮助
+3. 可以手动运行`bash /path/to/libbash/libbash.sh -h`查看帮助
 
 ### 目录结构
 
 ```
-/home/zmr466/libbash
+/home/zmr466/1_GitProject/Compiler/LycorisRecompile/scripts_utils
+├── README.md
 ├── array_utils.sh
 ├── color_utils.sh
 ├── file_utils.sh
@@ -23,7 +24,7 @@
 ├── regfile_template.sh
 └── safe_utils.sh
 
-1 directory, 8 files
+1 directory, 9 files
 ```
 
 ### 函数列表

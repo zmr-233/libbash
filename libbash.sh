@@ -6,7 +6,10 @@
 (return 0 2>/dev/null) && LIBBASH_SOURCED="yes" || LIBBASH_SOURCED="no"
 
 # 注意: 该变量是DotfilesConfigMaster的环境变量，应该由DotfilesConfigMaster设置
-DOTFILES_CONFIG_MASTER_HOME=$HOME/DotfilesConfigMaster
+# 如果未设置，则使用默认路径
+if [ -z "$DOTFILES_CONFIG_MASTER_HOME" ]; then
+    DOTFILES_CONFIG_MASTER_HOME="$HOME/DotfilesConfigMaster"
+fi
 
 # LIBBASH_HOME=$HOME/libbash # 用于存储libbash目录的路径
 
@@ -56,7 +59,7 @@ libbash_deps(){
 }
 
 libbash_check(){
-    checkCfg "$HOME/libbash"
+    checkCfg "$LIBBASH_HOME"
     return $?
 }
 
@@ -90,7 +93,7 @@ cat << 'XXMN' >> $TARGET
 genSignS proxy $TEMP/./.zshrc
 cat << 'EOF' >> $TEMP/./.zshrc
 # libbash库函数位置
-export LIBBASH_HOME="~/libbash"
+export LIBBASH_HOME="$LIBBASH_HOME"
 
 EOF
 genSignE proxy $TEMP/./.zshrc
@@ -133,11 +136,11 @@ __generate_libbash_readme(){
     echo ""
     echo '### 使用方法'
     echo ""
-    echo '1. 克隆脚本库 `git clone https://github.com/zmr-233/libbash.git ~/libbash`'
+    echo '1. 克隆脚本库到任意目录，例如 `git clone https://github.com/zmr-233/libbash.git /path/to/libbash`'
     echo ""
-    echo '2. 在脚本中引入 `source ~/libbash/libbash.sh`'
+    echo '2. 在脚本中引入 `source /path/to/libbash/libbash.sh`'
     echo ""
-    echo '3. 可以手动运行`bash ~/libbash/libbash.sh -h`查看帮助'
+    echo '3. 可以手动运行`bash /path/to/libbash/libbash.sh -h`查看帮助'
     echo ""
     if command -v tree > /dev/null 2>&1; then
         echo '### 目录结构'
@@ -180,28 +183,22 @@ __generate_libbash_readme(){
 
 # 用来生成git提交的
 __generate_libbash_git(){
-    local GIT_DIR=$(mktemp -d -t LIBBASH_XXXXXX)
-    # mkdir -p $GIT_DIR/libbash
-    git clone git@github.com:zmr-233/libbash.git $GIT_DIR/libbash
-    pushd $GIT_DIR/libbash > /dev/null
-    {
-        cat "$LIBBASH_HOME/libbash.sh"
-    } > libbash.sh
-    for filename in "${libfiles[@]}"; do
-        {
-            cat "$LIBBASH_HOME/$filename"
-        } > $filename
-    done
-    {
-        __generate_libbash_readme
-    } > README.md
-    git add -A
-    git commit -m "update libbash"
-    git push
-    popd > /dev/null
-
-    echo "cd $GIT_DIR/libbash"
+    echo "...生成git提交..."
     
+    __generate_libbash_readme > "$LIBBASH_HOME/README.md"
+    
+    # 显示当前状态
+    echo "当前libbash文件:"
+    echo "  - libbash.sh"
+    for filename in "${libfiles[@]}"; do
+        echo "  - $filename"
+    done
+    echo "  - README.md (updated)"
+    echo ""
+    
+    echo "提交命令:"
+    echo "  pushd $LIBBASH_HOME && git add -A && git commit -m \"update libbash $(date '+%Y-%m-%d %H:%M:%S')\" && git push && popd"
+    echo ""
 }
 
 if [[ $# -eq 0 ]] || [[ "$LIBBASH_SOURCED" == "yes" ]]; then
